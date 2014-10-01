@@ -37,8 +37,11 @@ public class ConditionGenerator {
     private void generateSymmMatrix(){
         for(int i=0; i<matrix.length; i++){
             for(int j=0; j<matrix.length; j++){
-                if(j >= i){
+                if(j > i){
                     matrix[i][j] = random.nextInt((int)(matrix.length * 1.5));
+                }
+                else if(j == i){
+                    matrix[i][j] = 0;
                 }
                 else{
                     matrix[i][j] = matrix[j][i];

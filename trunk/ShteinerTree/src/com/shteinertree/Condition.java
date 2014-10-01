@@ -1,11 +1,14 @@
 
 package com.shteinertree;
 
-import com.shteinertree.utils.ConsoleUtils;
+import com.shteinertree.exceptions.GraphInNotConnectedException;
+import com.shteinertree.utils.Utils;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import org.omg.CORBA.INTERNAL;
 
 /**
  *
@@ -13,11 +16,12 @@ import java.util.Set;
  */
 public class Condition {
     private int[][] matrix;
-    private final Set<Integer> reqVert;
+//    private final Set<Integer> reqVert;
+    private final int[] reqVert;
 
     public Condition(int[][] matrix, Set<Integer> reqVert) {
         this.matrix = matrix;
-        this.reqVert = reqVert;
+        this.reqVert = Utils.MathUtils.toIntMas(reqVert.toArray());
     }
     
     public void loidWarshall(){
@@ -30,17 +34,44 @@ public class Condition {
         }
     }
     
+    public int[] prim() throws GraphInNotConnectedException{
+        boolean[] used = new boolean[matrix.length];
+        int[] minEdge = new int[matrix.length];
+        int[] endOfTheEdge = new int[matrix.length];
+        Arrays.fill(minEdge, Integer.MIN_VALUE);
+        Arrays.fill(endOfTheEdge, -1);
+        minEdge[reqVert[0]] = 0;
+        for(int i=0; i<reqVert.length; ++i){
+            int newVertice = -1;
+            for(int verticeNum: reqVert){
+                if(!used[verticeNum] && (newVertice == -1 || minEdge[verticeNum] < minEdge[newVertice])){
+                    newVertice = verticeNum;
+                }
+            }
+            if(minEdge[newVertice] == Integer.MIN_VALUE){
+                throw new GraphInNotConnectedException();
+            }
+            used[newVertice] = true;
+            for(int verticeNum: reqVert){
+                if(verticeNum != newVertice && matrix[newVertice][verticeNum] < minEdge[verticeNum]){
+                    minEdge[verticeNum] = matrix[newVertice][verticeNum];
+                    endOfTheEdge[verticeNum] = newVertice;
+                }
+            }
+        }
+        return minEdge;
+    }
+    
     public boolean check(){
-        return reqVert.size() <= matrix.length && matrix[0].length == matrix.length;
+        return reqVert.length <= matrix.length && matrix[0].length == matrix.length;
     }
     
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(ConsoleUtils.ToString.matrixToString(matrix));
+        Utils.ToString.matrixToString(matrix, sb);
         sb.append("REQ vertices: ");
-        Iterator<Integer> it = reqVert.iterator();
-        sb.append(ConsoleUtils.ToString.collectionToString(it));
+        Utils.ToString.masToString(reqVert, sb);
         return sb.toString();
     }
     

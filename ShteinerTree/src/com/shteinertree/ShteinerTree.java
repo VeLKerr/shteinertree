@@ -19,19 +19,20 @@ public class ShteinerTree {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException, GraphInNotConnectedException {
-//        ConditionGenerator cg = ConditionGenerator.getInstance();
-//        cg.generate(MATRIX_SIZE);
-//        Condition cond = cg.getCondition();
-        Condition cond = Utils.Input.readFromTextFile(fname);
-        System.out.println(cond.toString() + "\n");
-//        cond.loidWarshall();
+        ConditionGenerator cg = ConditionGenerator.getInstance();
+        cg.generate(MATRIX_SIZE);
+        Condition cond = cg.getCondition();
+//        Condition cond = Utils.Input.readFromTextFile(fname);
 //        System.out.println(cond.toString() + "\n");
-//        List<Edge> edges = cond.toEdgesList();
-//        Collections.sort(edges);
-//        for(Edge ed: edges){
-//            System.out.println(ed.toString());
-//        }
-        System.out.println(Utils.ToString.masToString(cond.prim(), new StringBuilder()));
+        System.out.println(cond.toString() + "\n");
+        cond.floidWarshall();
+        System.out.println(cond.toString() + "\n");
+        List<Edge> edges = cond.toEdgesList();
+        Collections.sort(edges);
+        for(Edge ed: edges){
+            System.out.println(ed.toString());
+        }
+        //System.out.println(Utils.ToString.masToString(cond.prim(), new StringBuilder()));
     }
     
 }

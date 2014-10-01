@@ -12,6 +12,7 @@ import java.util.Set;
 public class ConditionGenerator {
     private static ConditionGenerator instance;
     private static final Random random = new Random();
+    private static final double multiplier = 2.0;
     private int matrix[][];
     private final Set<Integer> reqVert;
     private int reqVertSize;
@@ -38,7 +39,7 @@ public class ConditionGenerator {
         for(int i=0; i<matrix.length; i++){
             for(int j=0; j<matrix.length; j++){
                 if(j > i){
-                    matrix[i][j] = random.nextInt((int)(matrix.length * 1.5));
+                    matrix[i][j] = random.nextInt((int)(matrix.length * multiplier));
                 }
                 else if(j == i){
                     matrix[i][j] = 0;

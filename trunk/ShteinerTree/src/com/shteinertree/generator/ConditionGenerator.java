@@ -39,10 +39,16 @@ public class ConditionGenerator {
         for(int i=0; i<matrix.length; i++){
             for(int j=0; j<matrix.length; j++){
                 if(j > i){
-                    matrix[i][j] = random.nextInt((int)(matrix.length * multiplier));
+                    int el = random.nextInt((int)(matrix.length * multiplier));
+                    if(el == 0){
+                        matrix[i][j] = Integer.MAX_VALUE;
+                    }
+                    else{
+                        matrix[i][j] = el;
+                    }
                 }
                 else if(j == i){
-                    matrix[i][j] = 0;
+                    matrix[i][j] = Integer.MAX_VALUE;
                 }
                 else{
                     matrix[i][j] = matrix[j][i];

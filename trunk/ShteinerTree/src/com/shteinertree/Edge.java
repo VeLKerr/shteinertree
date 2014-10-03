@@ -22,8 +22,8 @@ public class Edge implements Comparable<Edge>{
     }
 
     @Override
-    public int compareTo(Edge o) {
-        return Integer.compareUnsigned(weigt, o.weigt);
+    public int compareTo(Edge ed) {
+        return Integer.compareUnsigned(weigt, ed.weigt);
     }
     
     @Override

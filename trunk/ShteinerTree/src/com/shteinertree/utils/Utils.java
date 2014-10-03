@@ -30,12 +30,17 @@ public abstract class Utils {
                 st = new StringTokenizer(line, delimiter);
                 int j=0;
                 while(st.hasMoreTokens()){
-                    matrix[i][j] = Integer.parseInt(st.nextToken());
+                    int el = Integer.parseInt(st.nextToken());
+                    if(el != 0){
+                        matrix[i][j] = el;
+                    }
+                    else{
+                        matrix[i][j] = Integer.MAX_VALUE;
+                    }
                     j++;
                 }
                 i++;
             }
-            //br.readLine();
             Set<Integer> reqVerts = new HashSet<>();
             st = new StringTokenizer(br.readLine(), delimiter);
             while(st.hasMoreTokens()){
@@ -48,7 +53,13 @@ public abstract class Utils {
         public static StringBuilder matrixToString(int[][] matrix, StringBuilder sb){
             for(int i=0; i<matrix.length; i++){
                 for(int j=0; j<matrix[0].length; j++){
-                    sb.append(matrix[i][j]).append("  ");
+                    if(matrix[i][j] != Integer.MAX_VALUE){
+                        sb.append(matrix[i][j]);
+                    }
+                    else{
+                        sb.append("-");
+                    }
+                    sb.append("  ");
                 }
                 sb.append("\n");
             }
@@ -75,14 +86,6 @@ public abstract class Utils {
             int[] res = new int[mas.length];
             for(int i=0; i<mas.length; i++){
                 res[i] = (int)mas[i];
-            }
-            return res;
-        }
-        
-        public static int sum(int[] mas){
-            int res = 0;
-            for(int el: mas){
-                res += el;
             }
             return res;
         }

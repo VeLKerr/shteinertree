@@ -39,13 +39,7 @@ public class ConditionGenerator {
         for(int i=0; i<matrix.length; i++){
             for(int j=0; j<matrix.length; j++){
                 if(j > i){
-                    int el = random.nextInt((int)(matrix.length * multiplier));
-                    if(el == 0){
-                        matrix[i][j] = Integer.MAX_VALUE;
-                    }
-                    else{
-                        matrix[i][j] = el;
-                    }
+                    matrix[i][j] = (int)((random.nextInt(matrix.length) + 1) * multiplier);
                 }
                 else if(j == i){
                     matrix[i][j] = Integer.MAX_VALUE;
@@ -64,8 +58,8 @@ public class ConditionGenerator {
         while(reqVert.size() != reqVertSize);
     }
     
-    private int generateReqVertSize(){
-        return random.nextInt(matrix.length) + 1;
+    private int generateReqVertSize(){ //не может быть сгенерирована <3 вершин
+        return random.nextInt(matrix.length - 1) + 3;
     }
     
     public Condition getCondition(){

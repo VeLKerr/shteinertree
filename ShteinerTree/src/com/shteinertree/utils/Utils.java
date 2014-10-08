@@ -16,6 +16,13 @@ import java.util.StringTokenizer;
  * @author Ivchenko Oleg (Kirius VeLKerr)
  */
 public abstract class Utils {
+    public static final String messages[] = {
+        "===== Initial matrix:",
+        "===== Floif-Warshall's algorithm is currently working...",
+        "===== Deleting the non-terminal vertices...",
+        "===== Prim-Kruscal's algorithm is currently working..."
+    };
+    
     public static abstract class Input{
         private static final String fileExtension = ".txt";
         public static Condition readFromTextFile(String filename) throws FileNotFoundException, IOException{

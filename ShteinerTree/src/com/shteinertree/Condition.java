@@ -1,6 +1,7 @@
 
 package com.shteinertree;
 
+import com.shteinertree.exceptions.InsufficientGraphException;
 import com.shteinertree.utils.Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -92,7 +93,7 @@ public class Condition {
         }
     }
     
-    public void deleteOptionalVertex(){
+    public void deleteOptionalVertex() throws InsufficientGraphException{
         int shift = 0;
         int initLen = initialMatrix.length;
         for(int i=0; i<initLen; i++){
@@ -103,10 +104,13 @@ public class Condition {
         }
     }
     
-    private void strikeOut(int index){
+    private void strikeOut(int index) throws InsufficientGraphException{
         int[][] res = new int[initialMatrix.length - 1][initialMatrix.length - 1];
         for(int i=0; i<initialMatrix.length; i++){
             for(int j=0; j<initialMatrix.length; j++){
+                if(i != j && initialMatrix[i][j] == Integer.MAX_VALUE){
+                    throw new InsufficientGraphException();
+                }
                 if(i != index && j != index){
                     int newI = i;
                     int newJ = j;
@@ -137,8 +141,7 @@ public class Condition {
         return reqVert.size() <= initialMatrix.length && initialMatrix[0].length == initialMatrix.length;
     }
     
-    @Override
-    public String toString(){
+    public String toString(boolean withReqVertices){
         StringBuilder sb = new StringBuilder();
         if(!isEmpty(initialMatrix)){
             Utils.ToString.matrixToString(initialMatrix, sb);
@@ -146,8 +149,10 @@ public class Condition {
         else{
             Utils.ToString.matrixToString(treeMatrix, sb);
         }
-        sb.append("REQ vertices: ");
-        Utils.ToString.collectionToString(reqVert.iterator(), sb);
+        if(withReqVertices){
+            sb.append("REQ vertices: ");
+            Utils.ToString.collectionToString(reqVert.iterator(), sb);
+        }
         return sb.toString();
     }
     

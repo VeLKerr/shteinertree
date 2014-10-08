@@ -1,6 +1,6 @@
 package com.shteinertree;
 
-import com.shteinertree.exceptions.GraphInNotConnectedException;
+import com.shteinertree.exceptions.InsufficientGraphException;
 import com.shteinertree.generator.ConditionGenerator;
 import com.shteinertree.utils.Utils;
 import java.io.BufferedReader;
@@ -12,12 +12,12 @@ import java.io.InputStreamReader;
  * @author Ivchenko Oleg (Kirius VeLKerr)
  */
 public class ShteinerTree {
-    private static final int MATRIX_SIZE = 10;
+    private static final int MATRIX_SIZE = 7;
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException, GraphInNotConnectedException {
+    public static void main(String[] args) throws IOException, InsufficientGraphException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int menu = 0;
         while(menu == 0){
@@ -46,14 +46,18 @@ public class ShteinerTree {
             cg.generate(MATRIX_SIZE);
             cond = cg.getCondition();
         }
-        System.out.println(cond.toString() + "\n");
+        System.out.println(Utils.messages[0]);
+        System.out.println(cond.toString(true));
         cond.floidWarshall();
-        System.out.println(cond.toString() + "\n");
+        System.out.println(Utils.messages[1]);
+        System.out.println(cond.toString(false));
         cond.deleteOptionalVertex();
-        System.out.println(cond.toString() + "\n");
+        System.out.println(Utils.messages[2]);
+        System.out.println(cond.toString(false));
         cond.primKruscall();
-        System.out.println(cond.toString() + "\n");
-        System.out.println("Tree's weight: " + cond.getApprocsymWeight());
+        System.out.println(Utils.messages[3]);
+        System.out.println(cond.toString(false));
+        System.out.println("Tree's weight approximation: " + cond.getApprocsymWeight());
     }
     
 }
